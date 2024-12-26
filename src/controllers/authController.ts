@@ -8,6 +8,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 export const register = async (req: FastifyRequest, reply: FastifyReply) => {
   const { username } = req.body as { username: string };
   const options = authService.generateRegistrationOptions(username);
+  console.log("ЯЯЯЯЯЯЯЯ ТУТ", options);
   reply.send(options);
 };
 

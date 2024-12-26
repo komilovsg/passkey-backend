@@ -23,23 +23,21 @@ export const generateRegistrationOptions = (username: string) => {
     attestationType: "direct",
   });
 
+  console.log("ЯЯЯЯЯЯЯЯ ТУТ", options);
   // Сохраняем challenge
   users.set(username, { ...users.get(username), registrationOptions: options });
   return options;
+  console.log("ЯЯЯЯЯЯЯЯ ТУТ", options);
 };
 
 // Функция для проверки регистрации
 export const verifyRegistration = async (username: string, response: any) => {
-  const expectedChallenge = "your-expected-challenge"; // Используйте challenge, который вы отправили клиенту
-  const expectedOrigin = "http://localhost:5005"; // Замените на ваш реальный origin
-  const expectedRPID = "localhost"; // Домен вашего RP (Relying Party)
-
   // Формируем объект для проверки ответа
   const verificationResult = await verifyRegistrationResponse({
     response, // Ответ от клиента
-    expectedChallenge, // Ожидаемый challenge
-    expectedOrigin, // Ожидаемый origin
-    expectedRPID, // Ожидаемый RP ID
+    expectedChallenge: "admin", // Ожидаемый challenge , // Используйте challenge, который вы отправили клиенту
+    expectedOrigin: "http://localhost:5005", // Ожидаемый origin
+    expectedRPID: "localhost", // Ожидаемый RP ID
   });
 
   // Логика обработки результата верификации
