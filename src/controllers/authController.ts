@@ -1,6 +1,9 @@
 import * as authService from "../services/authService.js";
 import { FastifyReply, FastifyRequest } from "fastify";
 
+//--------------------------------------------------------------------------------//
+//--------------------------------РЕГИСТРАЦИЯ-------------------------------------//
+//--------------------------------------------------------------------------------//
 //регистрация пользователя
 export const register = async (req: FastifyRequest, reply: FastifyReply) => {
   const { username } = req.body as { username: string };
@@ -21,6 +24,9 @@ export const verifyRegistration = async (
   reply.send(result);
 };
 
+//--------------------------------------------------------------------------------//
+//------------------------------------ВХОД----------------------------------------//
+//--------------------------------------------------------------------------------//
 //генерация challange для входа
 export const login = async (req: FastifyRequest, reply: FastifyReply) => {
   const { username } = req.body as { username: string };

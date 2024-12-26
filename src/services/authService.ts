@@ -8,15 +8,19 @@ import {
 // Временное хранилище пользователей
 const users: Map<string, any> = new Map();
 
+//--------------------------------------------------------------------------------//
+//--------------------------------РЕГИСТРАЦИЯ-------------------------------------//
+//--------------------------------------------------------------------------------//
 // Генерация параметров для регистрации
 export const generateRegistrationOptions = (username: string) => {
   const userID = new TextEncoder().encode(username);
 
   const options = generateRegistrationOptionsFromLib({
-    rpName: "My App",
+    rpName: "passkey",
     rpID: "localhost",
     userID,
     userName: username,
+    attestationType: "direct",
   });
 
   // Сохраняем challenge
@@ -51,6 +55,9 @@ export const verifyRegistration = async (username: string, response: any) => {
   }
 };
 
+//--------------------------------------------------------------------------------//
+//------------------------------------ВХОД----------------------------------------//
+//--------------------------------------------------------------------------------//
 // Генерация параметров для входа
 export const generateLoginOptions = (username: string) => {
   const user = users.get(username);
