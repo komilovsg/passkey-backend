@@ -1,31 +1,39 @@
-const authService = require("../services/authService");
+import * as authService from "../services/authService.js";
+import { FastifyReply, FastifyRequest } from "fastify";
 
-exports.registerGenerateOptions = async (request, reply) => {
-  try {
-    console.log("User data received:", request.body);
-    const options = await authService.generateRegistrationOptions(request.body);
-    request.session.challenge = options.challenge;
-    reply.send(options);
-  } catch (error) {
-    console.error("Error during registration options generation:", error);
-    reply
-      .status(500)
-      .send({ message: "Ошибка генерации опций регистрации", error });
-  }
+//регистрация пользователя
+export const register = async (req: FastifyRequest, reply: FastifyReply) => {
+  const { username } = req.body as { username: string };
+  const options = authService.generateRegistrationOptions(username);
+  reply.send(options);
 };
 
-exports.registerVerify = async (request, reply) => {
-  try {
-    const verification = await authService.verifyRegistrationResponse(
-      request.body,
-      request.session.challenge
-    );
-    if (verification.verified) {
-      reply.send({ verified: true });
-    } else {
-      reply.status(400).send({ verified: false });
-    }
-  } catch (error) {
-    reply.status(500).send({ message: "Ошибка верификации", error });
-  }
+//проверка регистрации
+export const verifyRegistration = async (
+  req: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const { username, response } = req.body as {
+    username: string;
+    response: any;
+  };
+  const result = await authService.verifyRegistration(username, response);
+  reply.send(result);
+};
+
+//генерация challange для входа
+export const login = async (req: FastifyRequest, reply: FastifyReply) => {
+  const { username } = req.body as { username: string };
+  const options = authService.generateLoginOptions(username);
+  reply.send(options);
+};
+
+//проверка входа
+export const verifyLogin = async (req: FastifyRequest, reply: FastifyReply) => {
+  const { username, response } = req.body as {
+    username: string;
+    response: any;
+  };
+  const result = await authService.verifyLogin(username, response);
+  reply.send(result);
 };

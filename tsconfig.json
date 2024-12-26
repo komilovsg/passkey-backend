@@ -6,6 +6,10 @@
     "rootDir": "./src",
     "resolveJsonModule": true,
     "moduleResolution": "nodenext",
-    "allowSyntheticDefaultImports": true
-  }
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

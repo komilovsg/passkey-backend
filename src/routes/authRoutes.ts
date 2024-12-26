@@ -1,11 +1,9 @@
-const authController = require("../controllers/authController");
+import * as authController from "../controllers/authController.js";
+import { FastifyInstance } from "fastify";
 
-async function routes(fastify, options) {
-  fastify.post(
-    "/register/generate-options",
-    authController.registerGenerateOptions
-  );
-  fastify.post("/register/verify", authController.registerVerify);
+export default async function authRoutes(app: FastifyInstance) {
+  app.post("/register", authController.register);
+  app.post("/register/verify", authController.verifyRegistration);
+  app.post("/login", authController.login);
+  app.post("/login/verify", authController.verifyLogin);
 }
-
-module.exports = routes;

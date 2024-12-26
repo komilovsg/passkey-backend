@@ -1,7 +1,8 @@
 {
   "name": "passkey-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/server.js",
   "scripts": {
     "compile": "tsc -b -w",
     "watch": "nodemon --watch 'src/**/*.ts' ./src/server.ts",

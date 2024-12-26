@@ -1,27 +1,19 @@
 import "dotenv/config";
-const fastify = require("fastify")({ logger: true });
-const authRoutes = require("./routes/authRoutes");
+import fastify from "fastify";
+import authRoutes from "./routes/authRoutes.js";
 
-// Регистрация плагинов
-fastify.register(require("@fastify/jwt"), {
-  secret: process.env.JWT_SECRET,
-});
-fastify.register(require("@fastify/cookie"));
-fastify.register(require("@fastify/session"), {
-  secret: process.env.SESSION_SECRET,
-  cookie: { secure: false }, // Установите true в продакшене
-});
+const app = fastify({ logger: true });
 
-// Регистрация маршрутов
-fastify.register(authRoutes, { prefix: "/webauthn" });
+app.register(authRoutes, { prefix: "/auth" });
 
-// Запуск сервера
 const start = async () => {
   try {
-    await fastify.listen({ port: process.env.PORT || 5005 });
-    fastify.log.info(`Сервер запущен на ${fastify.server.address().port}`);
+    await app.listen({ port: Number(process.env.PORT) || 5005 });
+    console.log(
+      `Сервер запущен на http://localhost:${process.env.PORT || 5005}`
+    );
   } catch (err) {
-    fastify.log.error(err);
+    app.log.error(err);
     process.exit(1);
   }
 };
